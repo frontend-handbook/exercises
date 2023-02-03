@@ -8,7 +8,7 @@ const addRemote = async (a, b) =>
 
 // 请实现本地的add方法，调用 addRemote，能最优的实现输入数字的加法。
 async function add(...inputs) {
-  // 你的实现
+  // 基于递归实现，每次处理一个
   return new Promise((res) => {
     let sum = 0;
     function fn(ind) {
@@ -26,6 +26,48 @@ async function add(...inputs) {
     fn(0);
   });
 }
+
+// 基于promise.all, 两个一组、递归实现
+function add_PromiseAll(...inputs) {
+  return new Promise((res) => {
+    const temp = [];
+    while (inputs.length) {
+      if (inputs.length === 1) {
+        temp.push(addRemote(inputs.pop(), 0));
+      } else if (inputs.length > 1) {
+        temp.push(addRemote(inputs.pop(), inputs.pop()));
+      }
+    }
+    Promise.all(temp).then((inputs) => {
+      if (inputs.length > 1) {
+        res(add(...inputs));
+      } else {
+        res(inputs[0]);
+      }
+    });
+  });
+}
+
+// 两个一组，使用reduce实现
+function add_reduce(...inputs) {
+  return new Promise(async (res) => {
+    const temp = [];
+    while (inputs.length) {
+      if (inputs.length === 1) {
+        temp.push(addRemote(inputs.pop(), 0));
+      } else if (inputs.length > 1) {
+        temp.push(addRemote(inputs.pop(), inputs.pop()));
+      }
+    }
+
+    const ans = temp.reduce(async (a, b) => {
+      const sa = await a;
+      const sb = await b;
+      return addRemote(sa, sb);
+    });
+    res(ans);
+  });
+}
 // 测试用例
 add(5, 6).then((result) => {
   console.log(result); // 11
@@ -40,10 +82,18 @@ add(2, 3, 3, 3, 4, 1, 3, 3, 5).then((result) => {
 function App() {
   const [values, setValues] = useState("");
   const [res, setRes] = useState(0);
-  const handleClick = async () => {
-    const nums = values.split(",").map((d) => Number(d));
+  const nums = values.split(",").map((d) => Number(d));
+
+  const handleClick_Base = async () => {
     const res = await add(...nums);
-    console.log(res);
+    setRes(res);
+  };
+  const handleClick_PromiseAll = async () => {
+    const res = await add_PromiseAll(...nums);
+    setRes(res);
+  };
+  const handleClick_Reduce = async () => {
+    const res = await add_reduce(...nums);
     setRes(res);
   };
   const handleInput = (e) => {
@@ -64,7 +114,18 @@ function App() {
           type="text"
           placeholder="请输入要相加的数字（如1,3,4,5,6）"
         />
-        <button onClick={handleClick}>相加</button>
+        {/* 递归实现 */}
+        <button onClick={handleClick_Base}>
+          相加(1
+        </button>
+        {/* promise.all实现 */}
+        <button onClick={handleClick_PromiseAll}>
+          相加(2
+        </button>
+        {/* reduce 实现 */}
+        <button onClick={handleClick_Reduce}>
+          相加(3
+        </button>
       </section>
       <section className="App-result">
         <p>
