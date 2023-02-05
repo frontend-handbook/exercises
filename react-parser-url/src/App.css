@@ -1,0 +1,36 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  padding: 50px;
+  margin-bottom: 20px;
+  background-color: #282c34;
+  color: white;
+}
+
+.App-content input {
+  width: 800px;
+  height: 30px;
+  box-sizing: border-box;
+}
+
+.App-content button {
+  width: 80px;
+  height: 30px;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.App-result {
+  margin-top: 30px;
+  color: green;
+}
+.App-result pre {
+  text-align: left;
+  width: 400px;
+  overflow: scroll;
+  margin: 0 auto;
+  background: #efefef;
+  padding: 10px;
+}
