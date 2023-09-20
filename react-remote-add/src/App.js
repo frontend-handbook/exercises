@@ -11,8 +11,11 @@ async function add(...inputs) {
 }
 
 /**
- * 基本：正确得到结果
- * 加分：1. ui交互合理，  2. 计算时间越短越好
+ * 要求：
+ * 1. 所有的加法都必须使用addRemote
+ * 2. 输入错误时，input边框需要变红，Button disable
+ * 3. 计算过程 Button与input disable, Button 展示计算中...
+ * 3. 计算时间越短越好
  */
 function App() {
   return (
@@ -23,7 +26,6 @@ function App() {
           <br />
           点击相加按钮能显示最终结果，并给出计算时间
         </p>
-        <div>用例：1,4,3,3,5 ={">"} 16</div>
         <div>用例：2, 3, 3, 3, 4, 1, 3, 3, 5, 6, 1, 4, 7 ={">"} 38</div>
       </header>
       <section className="App-content">
