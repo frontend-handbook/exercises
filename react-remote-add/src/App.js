@@ -26,7 +26,9 @@ function App() {
           <br />
           点击相加按钮能显示最终结果，并给出计算时间
         </p>
-        <div>用例：2, 3, 3, 3, 4, 1, 3, 3, 5, 6, 1, 4, 7 ={">"} 38</div>
+        <div>
+          用例：2, 3, 3, 3, 4, 1, 3, 3, 5, 6, 1, 4, 7 ={">"} 38，最慢1200ms
+        </div>
       </header>
       <section className="App-content">
         <input type="text" placeholder="请输入要相加的数字（如1,4,3,3,5）" />
