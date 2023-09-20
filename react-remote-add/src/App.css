@@ -26,3 +26,9 @@
   margin-top: 30px;
   color: green;
 }
+.input {
+  outline: none;
+}
+.inputErro {
+  border: 1px solid red
+}
