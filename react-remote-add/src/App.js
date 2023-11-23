@@ -21,15 +21,26 @@ function App () {
   const [arr, setArr] = useState([])
   const [count, setCount] = useState(0)
   const [consumeTime, setConsumeTime] = useState(0)
+  const [borderRed, setBorderRed] = useState(false)
+  
   function handleInputBlur (e) {
-    // 假设输入符合规范，时间关系我就先不写验证了
-    if (true) {
+    if (isValidString(e.target.value)) {
       const str = e.target.value.replace(/，/g, ',')
       const arr = str.split(',').map(item => {
         return +item
       })
       setArr(arr)
+      setBorderRed(false)
+    } else {
+      console.log("必须英文逗号拼数字，例如2,3,3,3,4,1,3,3,5,6,1,4,7")
+      setArr([])
+      setBorderRed(true)
     }
+  }
+
+  function isValidString (str) {
+    const regex = /^\d+(?:,\d+)*$/
+    return regex.test(str)
   }
 
   async function handleAdd () {
@@ -70,6 +81,7 @@ function App () {
       </header>
       <section className='App-content'>
         <input
+        style={borderRed?{border: '1px solid red'}:{}}
           type='text'
           placeholder='请输入要相加的数字（如1,4,3,3,5）'
           onBlur={e => {
@@ -80,6 +92,7 @@ function App () {
           onClick={() => {
             handleAdd()
           }}
+          disabled={arr.length===0?true:false}
         >
           相加
         </button>
